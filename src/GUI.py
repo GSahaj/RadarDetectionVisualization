@@ -155,15 +155,15 @@ class RadarVisualization:
 
     def update_distance_label(self, distance):
         self.distance_label.config(text=f"Distance: {distance} cm")
-        if distance < 15:
+        if distance < 17:
             self.alert_label.config(text="OBJECT DETECTED!", foreground="red")
         else:
             self.alert_label.config(text="")
     
     def update_gui(self):
-        self.update_1d_plot()
+        #self.update_1d_plot()
         self.update_radar_display()
-        self.update_wave_visualization()
+        #self.update_wave_visualization()
         self.root.after(50, self.update_gui)
     
     def update_1d_plot(self):

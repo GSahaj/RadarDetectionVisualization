@@ -102,21 +102,28 @@ void loop() {
   float distance = getDistanceCM();
   
   // 2. Send data to GUI (format: "angle,distance")
-  float currentAngle = currentSteps * 360.0 / STEPS_PER_REV;
+  float currentAngle = currentSteps * 0.0 / STEPS_PER_REV;
   Serial.print(currentAngle);
   Serial.print(",");
   Serial.println(distance);
 
-  // 3. Move motor
+ // 3. Check distance before moving
+  if (distance < 17.0) {
+    Serial.println("Object detected < 17cm. Paused.");
+    delay(200);  // Brief pause before checking again
+    return;      // Skip the rest of the loop and don't move
+  }
+
+  // 4. Move motor
   if (isClockwise) {
     moveStepper(STEP_SIZE);
   } else {
     moveStepper(-STEP_SIZE);
   }
   
-  // 4. Check direction change
+  // 5. Check direction change
   updateDirection();
   
-  // 5. Control scan speed
-  delay(100);
+  // 6. Control scan speed
+  delay(50);
 }
